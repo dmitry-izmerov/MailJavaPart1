@@ -13,11 +13,13 @@ public class App {
         AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
 
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        contextHandler.addServlet(new ServletHolder(allRequestsServlet), "/*");
+        contextHandler.addServlet(new ServletHolder(allRequestsServlet), "/mirror");
 
         Server server = new Server(8080);
         server.setHandler(contextHandler);
         server.start();
+
+        System.out.println("Server started");
         server.join();
     }
 }
