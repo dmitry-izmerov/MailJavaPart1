@@ -1,34 +1,23 @@
 package ru.demi.mailjava.accounts;
 
 /**
- * Created by demi on 22.01.16.
+ * Created by demi
+ * on 22.01.16.
  */
 public class UserProfile {
     private final String login;
-    private final String pass;
-    private final String email;
+    private final String password;
 
-    public UserProfile(String login, String pass, String email) {
+    public UserProfile(String login, String password) {
         this.login = login;
-        this.pass = pass;
-        this.email = email;
-    }
-
-    public UserProfile(String login) {
-        this.login = login;
-        this.pass = login;
-        this.email = login;
+        this.password = password;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public String getPass() {
-        return pass;
-    }
-
-    public String getEmail() {
-        return email;
+    public String getPassword() {
+        return password;
     }
 }
