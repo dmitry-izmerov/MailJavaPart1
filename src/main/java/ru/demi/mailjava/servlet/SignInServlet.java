@@ -1,7 +1,7 @@
-package ru.demi.mailjava.servlets;
+package ru.demi.mailjava.servlet;
 
-import ru.demi.mailjava.accounts.AccountService;
-
+import ru.demi.mailjava.DBException;
+import ru.demi.mailjava.service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,14 +10,14 @@ import java.io.IOException;
 
 /**
  * @author demi
- * Created on 24.01.16
+ * @date   24.01.16
  */
-public class SignUpServlet extends HttpServlet {
+public class SignInServlet extends HttpServlet {
 
-    private AccountService accountService;
+    private UserService userProfileService;
 
-    public SignUpServlet(AccountService accountService) {
-        this.accountService = accountService;
+    public SignInServlet(UserService userProfileService) {
+        this.userProfileService = userProfileService;
     }
 
     @Override
@@ -33,11 +33,18 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
 
-        if (!accountService.isSingIn(login, pass)) {
-            accountService.singUp(login, pass);
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        try {
+            if (!userProfileService.isSingIn(login, pass)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().println("Unauthorized");
+                return;
+            }
+        } catch (DBException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
         }
+
+        response.getWriter().println("Authorized: " + login);
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }
